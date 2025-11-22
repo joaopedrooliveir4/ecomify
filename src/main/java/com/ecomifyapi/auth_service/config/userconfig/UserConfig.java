@@ -1,0 +1,34 @@
+package com.ecomifyapi.auth_service.config.userconfig;
+
+import com.ecomifyapi.auth_service.application.gateway.UserGateway;
+import com.ecomifyapi.auth_service.application.usecase.CretedUser;
+import com.ecomifyapi.auth_service.controller.mapper.UserDtoMapper;
+import com.ecomifyapi.auth_service.infra.gateway.UserEntityMapper;
+import com.ecomifyapi.auth_service.infra.gateway.UserRepositoryGateway;
+import com.ecomifyapi.auth_service.infra.persistence.UserRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@Configuration
+public class UserConfig {
+    @Bean
+    CretedUser created (UserGateway userGateway) {
+        return new CretedUser(userGateway);
+    }
+
+    @Bean
+    UserGateway userGateway (UserRepository userRepository, UserEntityMapper userEntityMapper, BCryptPasswordEncoder passwordEncoder) {
+        return new UserRepositoryGateway(userRepository, userEntityMapper, passwordEncoder);
+    }
+
+    @Bean
+    UserEntityMapper userEntityMapper() {
+        return new UserEntityMapper();
+    }
+
+    @Bean
+    UserDtoMapper userDtoMapper() {
+        return new UserDtoMapper();
+    }
+}
