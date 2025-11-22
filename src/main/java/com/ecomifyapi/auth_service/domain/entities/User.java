@@ -1,6 +1,9 @@
 package com.ecomifyapi.auth_service.domain.entities;
 
 import com.ecomifyapi.auth_service.domain.enums.Role;
+import com.ecomifyapi.auth_service.domain.exception.EmailArgumentException;
+import com.ecomifyapi.auth_service.domain.exception.NameArgumentException;
+import com.ecomifyapi.auth_service.domain.exception.PasswordArgumentException;
 
 import java.time.LocalDateTime;
 
@@ -13,13 +16,13 @@ public class User {
 
     public User(String name, String email, String password) {
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Name não pode ser vazio");
+            throw new NameArgumentException("Name não pode ser vazio");
         }
         if (email == null || !email.contains("@")) {
-            throw new IllegalArgumentException("Email inválido");
+            throw new EmailArgumentException("Email inválido");
         }
         if (password == null || password.length() < 6) {
-            throw new IllegalArgumentException("Senha deve ter pelo menos 6 caracteres");
+            throw new PasswordArgumentException("Senha deve ter pelo menos 6 caracteres");
         }
 
         this.name = name;
