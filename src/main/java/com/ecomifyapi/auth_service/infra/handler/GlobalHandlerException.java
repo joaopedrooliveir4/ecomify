@@ -1,9 +1,7 @@
 package com.ecomifyapi.auth_service.infra.handler;
 
-import com.ecomifyapi.auth_service.domain.exception.ApiError;
-import com.ecomifyapi.auth_service.domain.exception.EmailArgumentException;
-import com.ecomifyapi.auth_service.domain.exception.NameArgumentException;
-import com.ecomifyapi.auth_service.domain.exception.PasswordArgumentException;
+import com.ecomifyapi.auth_service.domain.exception.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,11 +19,11 @@ public class GlobalHandlerException {
         message.put("Error:", e.getMessage());
 
         ApiError apiError = new ApiError(
-                HttpStatus.FORBIDDEN.value(),
+                HttpStatus.BAD_REQUEST.value(),
                 message
         );
 
-        return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EmailArgumentException.class)
@@ -34,11 +32,11 @@ public class GlobalHandlerException {
         message.put("Error:", e.getMessage());
 
         ApiError apiError = new ApiError(
-                HttpStatus.FORBIDDEN.value(),
+                HttpStatus.BAD_REQUEST.value(),
                 message
         );
 
-        return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(PasswordArgumentException.class)
@@ -47,10 +45,25 @@ public class GlobalHandlerException {
         message.put("Error:", e.getMessage());
 
         ApiError apiError = new ApiError(
-                HttpStatus.FORBIDDEN.value(),
+                HttpStatus.BAD_REQUEST.value(),
                 message
         );
 
-        return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ApiError> handleUserNotFound(
+            UserNotFoundException ex
+    ) {
+        Map<String, String> message = new HashMap<>();
+        message.put("error", ex.getMessage());
+
+        ApiError apiError = new ApiError(
+                HttpStatus.NOT_FOUND.value(),
+                message
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
 }
