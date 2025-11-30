@@ -5,10 +5,8 @@ import com.ecomifyapi.auth_service.domain.entities.User;
 import com.ecomifyapi.auth_service.domain.exception.UserNotFoundException;
 import com.ecomifyapi.auth_service.infra.persistence.UserEntity;
 import com.ecomifyapi.auth_service.infra.persistence.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import javax.print.attribute.UnmodifiableSetException;
-import java.util.Optional;
 
 public class UserRepositoryGateway implements UserGateway {
 
@@ -49,7 +47,23 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public Optional<User> findByEmail(User user) {
-        return Optional.empty();
+    public User updatePassword(String newPassword, Long id) {
+        UserEntity entity = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
+
+        String hashedPassword = passwordEncoder.encode(newPassword);
+        entity.setPassword(hashedPassword);
+
+        UserEntity saved = userRepository.save(entity);
+        return userEntityMapper.toDomainObj(saved);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteUser(Long id) {
+        UserEntity entity = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
+
+        userRepository.deleteById(id);
+        return null;
     }
 }
