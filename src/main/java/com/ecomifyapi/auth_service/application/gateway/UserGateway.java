@@ -1,11 +1,11 @@
 package com.ecomifyapi.auth_service.application.gateway;
 
 import com.ecomifyapi.auth_service.domain.entities.User;
-
-import java.util.Optional;
+import org.springframework.http.ResponseEntity;
 
 public interface UserGateway {
     User save (User user);
     User updateRole (User user, Long id);
-    Optional<User> findByEmail (User user);
+    User updatePassword (String newPassword, Long id);
+    ResponseEntity<Void> deleteUser(Long id);
 }
