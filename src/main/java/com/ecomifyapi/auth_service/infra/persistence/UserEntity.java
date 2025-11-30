@@ -19,7 +19,7 @@ public class UserEntity {
 
     @NotBlank
     @Email
-    private final String email;
+    private String email;
 
     @NotBlank
     private String password;
@@ -28,6 +28,8 @@ public class UserEntity {
     private Role role;
 
     private LocalDateTime createdAt;
+
+    public UserEntity() {}
 
     public UserEntity(String name, String email, String password, Role role, LocalDateTime createdAt) {
         this.name = name;
