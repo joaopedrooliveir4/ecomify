@@ -2,6 +2,8 @@ package com.ecomifyapi.auth_service.config.userconfig;
 
 import com.ecomifyapi.auth_service.application.gateway.UserGateway;
 import com.ecomifyapi.auth_service.application.usecase.CretedUser;
+import com.ecomifyapi.auth_service.application.usecase.DeleteUser;
+import com.ecomifyapi.auth_service.application.usecase.UpdatePassword;
 import com.ecomifyapi.auth_service.application.usecase.UpdateUserRole;
 import com.ecomifyapi.auth_service.controller.mapper.UserDtoMapper;
 import com.ecomifyapi.auth_service.infra.gateway.UserEntityMapper;
@@ -36,5 +38,15 @@ public class UserConfig {
     @Bean
     UpdateUserRole updateUserRole(UserGateway userGateway) {
         return new UpdateUserRole(userGateway);
+    }
+
+    @Bean
+    UpdatePassword updatePassword(UserGateway userGateway) {
+        return new UpdatePassword(userGateway);
+    }
+
+    @Bean
+    DeleteUser deleteUser(UserGateway userGateway) {
+        return new DeleteUser(userGateway);
     }
 }
