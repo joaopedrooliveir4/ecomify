@@ -2,10 +2,12 @@ package com.ecomifyapi.auth_service.infra.gateway;
 
 import com.ecomifyapi.auth_service.application.gateway.UserGateway;
 import com.ecomifyapi.auth_service.domain.entities.User;
+import com.ecomifyapi.auth_service.domain.exception.UserNotFoundException;
 import com.ecomifyapi.auth_service.infra.persistence.UserEntity;
 import com.ecomifyapi.auth_service.infra.persistence.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.print.attribute.UnmodifiableSetException;
 import java.util.Optional;
 
 public class UserRepositoryGateway implements UserGateway {
@@ -31,6 +33,19 @@ public class UserRepositoryGateway implements UserGateway {
         UserEntity saveObj = userRepository.save(userEntity);
 
         return userEntityMapper.toDomainObj(saveObj);
+    }
+
+    @Override
+    public User updateRole(User user, Long id) {
+        UserEntity entity = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado"));
+
+        user.promoteToAdmin();
+
+        entity.setRole(user.getRole());
+
+        UserEntity saved = userRepository.save(entity);
+        return userEntityMapper.toDomainObj(saved);
     }
 
     @Override
