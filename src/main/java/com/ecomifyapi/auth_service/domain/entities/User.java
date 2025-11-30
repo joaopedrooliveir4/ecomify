@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public class User {
     private String name;
-    private final String email;
+    private String email;
     private String password;
     private Role role;
     private LocalDateTime createdAt;
