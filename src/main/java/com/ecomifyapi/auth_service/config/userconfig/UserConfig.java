@@ -2,6 +2,7 @@ package com.ecomifyapi.auth_service.config.userconfig;
 
 import com.ecomifyapi.auth_service.application.gateway.UserGateway;
 import com.ecomifyapi.auth_service.application.usecase.CretedUser;
+import com.ecomifyapi.auth_service.application.usecase.UpdateUserRole;
 import com.ecomifyapi.auth_service.controller.mapper.UserDtoMapper;
 import com.ecomifyapi.auth_service.infra.gateway.UserEntityMapper;
 import com.ecomifyapi.auth_service.infra.gateway.UserRepositoryGateway;
@@ -30,5 +31,10 @@ public class UserConfig {
     @Bean
     UserDtoMapper userDtoMapper() {
         return new UserDtoMapper();
+    }
+
+    @Bean
+    UpdateUserRole updateUserRole(UserGateway userGateway) {
+        return new UpdateUserRole(userGateway);
     }
 }
