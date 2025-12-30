@@ -4,14 +4,22 @@ import com.ecomifyapi.auth_service.domain.enums.Role;
 import com.ecomifyapi.auth_service.domain.exception.EmailArgumentException;
 import com.ecomifyapi.auth_service.domain.exception.NameArgumentException;
 import com.ecomifyapi.auth_service.domain.exception.PasswordArgumentException;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "entidade de usuário")
 public class User {
+
+    @Schema(description = "Nome do usuário", example = "João")
     private String name;
+    @Schema(description = "Email do usuário", example = "exemplo@email.com")
     private String email;
+    @Schema(description = "Password do usuário", example = "1234567890")
     private String password;
+    @Schema(description = "Perfil do usuário", example = "USER", accessMode = Schema.AccessMode.READ_ONLY)
     private Role role;
+    @Schema(description = "Data de criação do usuário", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime createdAt;
 
     public User(String name, String email, String password) {

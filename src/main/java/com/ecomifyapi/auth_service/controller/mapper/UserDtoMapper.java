@@ -1,7 +1,7 @@
 package com.ecomifyapi.auth_service.controller.mapper;
 
-import com.ecomifyapi.auth_service.controller.dtos.UserRequest;
-import com.ecomifyapi.auth_service.controller.dtos.UserResponse;
+import com.ecomifyapi.auth_service.controller.dtos.dtoUser.UserRequest;
+import com.ecomifyapi.auth_service.controller.dtos.dtoUser.UserResponse;
 import com.ecomifyapi.auth_service.domain.entities.User;
 
 public class UserDtoMapper {

@@ -1,14 +1,21 @@
-package com.ecomifyapi.auth_service.controller.dtos;
+package com.ecomifyapi.auth_service.controller.dtos.dtoUser;
 
 import com.ecomifyapi.auth_service.domain.enums.Role;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
+@Schema(description = "Dados enviados pelo cliente para criar/atualizar um usuário")
 public class UserRequest {
+    @Schema(description = "Nome do usuário", example = "João")
     private String name;
+    @Schema(description = "Email do usuário", example = "joao@email.com")
     private final String email;
+    @Schema(description = "Senha do usuário", example = "1234567890")
     private String password;
+    @Schema(description = "Perfil do usuário (não enviado pelo cliente)", accessMode = Schema.AccessMode.READ_ONLY)
     private Role role;
+    @Schema(description = "Data de criação (não enviada pelo cliente)", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime createdAt;
 
     public UserRequest(String name, String email, String password, Role role, LocalDateTime createdAt) {

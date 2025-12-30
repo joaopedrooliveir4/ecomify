@@ -8,6 +8,8 @@ import com.ecomifyapi.auth_service.infra.persistence.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Optional;
+
 public class UserRepositoryGateway implements UserGateway {
 
     private final UserRepository userRepository;
@@ -65,5 +67,11 @@ public class UserRepositoryGateway implements UserGateway {
 
         userRepository.deleteById(id);
         return null;
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(userEntityMapper::toDomainObj);
     }
 }
